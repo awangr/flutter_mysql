@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:using_db/controller/usersC/usersC.dart';
-import 'package:using_db/users/auth/sigup_screen.dart';
+import 'package:using_db/users/auth/login_screen.dart';
 
 final usersC = Get.put(UsersC());
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SigupScreen extends StatefulWidget {
+  const SigupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SigupScreen> createState() => _SigupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SigupScreenState extends State<SigupScreen> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       height: 200,
                       width: MediaQuery.of(context).size.width,
-                      child: Image.asset('asset/images/login.jpg',
+                      child: Image.asset('asset/images/sigup.jpg',
                           fit: BoxFit.cover),
                     ),
                     SizedBox(height: 50),
@@ -49,6 +49,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextFormField(
                                     style: TextStyle(color: Colors.white),
                                     decoration: InputDecoration(
+                                        prefixIcon: Icon(Icons.person),
+                                        hintText: 'Username',
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20))),
+                                    controller: usersC.usernameC,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Username is required';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(height: 10),
+                                  TextFormField(
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
                                         prefixIcon: Icon(Icons.email),
                                         hintText: 'Email',
                                         hintStyle:
@@ -64,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       return null;
                                     },
                                   ),
-                                  SizedBox(height: 15),
+                                  SizedBox(height: 10),
                                   Obx(
                                     () => TextFormField(
                                       style: TextStyle(color: Colors.white),
@@ -100,10 +119,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       onPressed: () {
                                         if (formKey.currentState!.validate()) {
                                           //
+                                          usersC.validateEmail();
                                         }
                                         ;
                                       },
-                                      child: Text('LOGIN'))
+                                      child: Text('REGISTER'))
                                 ],
                               ),
                             ),
@@ -111,29 +131,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Belum memiliki akun?',
+                                  'Sudah memiliki akun?',
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 TextButton(
                                     onPressed: () {
-                                      Get.to(SigupScreen());
+                                      Get.to(LoginScreen());
                                     },
-                                    child: Text('Register'))
-                              ],
-                            ),
-                            Text(
-                              '---- OR ----',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Are U Admin?',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                TextButton(
-                                    onPressed: () {}, child: Text('Click here'))
+                                    child: Text('SIG IN'))
                               ],
                             ),
                           ],
